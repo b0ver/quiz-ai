@@ -10,7 +10,7 @@ const STATS_API = "https://ai-quiz-stats.b0ver.workers.dev";
 
 // --- Ссылка на мини-апп для шеринга. Пусто => текущий URL страницы.
 //     Например: "https://t.me/<bot>/<app>"
-const SHARE_URL = "";
+const SHARE_URL = "https://t.me/aidaquiz_bot/aidaquizAI";
 
 /* ---------- Telegram WebApp ---------- */
 // SDK с CDN определяет window.Telegram.WebApp даже в обычном браузере (degraded-режим,
