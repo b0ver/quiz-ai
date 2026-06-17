@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#17212b" />
+  <title>Какой ты искусственный интеллект?</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <main class="app">
+
+    <!-- ЭКРАН 1: ИНТРО -->
+    <section id="screen-intro" class="screen is-active">
+      <div class="intro">
+        <div class="intro__emoji">🤖</div>
+        <h1 class="intro__title">Какой ты искусственный&nbsp;интеллект?</h1>
+        <p class="intro__lead">12 вопросов — и узнаешь, на какую языковую модель ты похож характером. Claude-перфекционист, токсичный Grok или тихий гений DeepSeek?</p>
+        <button id="btn-start" class="btn btn--primary">Начать</button>
+        <p class="intro__hint">Честно отвечай — так точнее.</p>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 2: ВОПРОС -->
+    <section id="screen-quiz" class="screen">
+      <div class="quiz">
+        <div class="quiz__progress">
+          <div class="quiz__progress-text"><span id="q-current">1</span>/<span id="q-total">12</span></div>
+          <div class="quiz__progress-bar"><div id="q-progress-fill" class="quiz__progress-fill"></div></div>
+        </div>
+        <h2 id="q-text" class="quiz__question"></h2>
+        <div id="q-options" class="quiz__options"></div>
+      </div>
+    </section>
+
+    <!-- ЭКРАН 3: РЕЗУЛЬТАТ -->
+    <section id="screen-result" class="screen">
+      <div class="result">
+        <div class="result__head">
+          <div id="r-emoji" class="result__emoji"></div>
+          <h2 id="r-name" class="result__name"></h2>
+          <div id="r-psychotype" class="result__psychotype"></div>
+        </div>
+
+        <div class="card">
+          <p id="r-desc" class="result__desc"></p>
+          <div id="r-tagline" class="result__tagline"></div>
+          <div class="result__team">
+            <span class="result__team-label">В команде ты —</span>
+            <span id="r-team" class="result__team-text"></span>
+          </div>
+        </div>
+
+        <div class="block">
+          <h3 class="block__title">Твой расклад</h3>
+          <div id="r-breakdown" class="bars"></div>
+        </div>
+
+        <div id="r-stats-block" class="block" hidden>
+          <h3 class="block__title">Как у всех остальных</h3>
+          <div id="r-stats-summary" class="stats-summary"></div>
+          <div id="r-stats-bars" class="bars"></div>
+        </div>
+
+        <div class="result__actions">
+          <button id="btn-share" class="btn btn--primary">Поделиться</button>
+          <button id="btn-restart" class="btn btn--ghost">Пройти заново</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="quiz-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

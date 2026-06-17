@@ -1,0 +1,8 @@
+# wrangler / cloudflare
+worker/.wrangler/
+worker/node_modules/
+.dev.vars
+
+# os / editor
+.DS_Store
+*.log
