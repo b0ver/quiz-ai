@@ -6,7 +6,7 @@
 // --- Конфиг бэкенда. Впиши сюда URL воркера после деплоя (раздел README, шаг 4).
 //     Пример: "https://ai-quiz-stats.<subdomain>.workers.dev"
 //     Пусто => блок общей статистики просто не показывается.
-const STATS_API = "";
+const STATS_API = "https://ai-quiz-stats.b0ver.workers.dev";
 
 // --- Ссылка на мини-апп для шеринга. Пусто => текущий URL страницы.
 //     Например: "https://t.me/<bot>/<app>"
