@@ -99,12 +99,33 @@ function computeResult(answers) {
   return { winner, scores };
 }
 
-// Личный расклад: типы со score > 0, процент = round(score / 12 * 100), по убыванию.
+// Целочисленные проценты, суммирующиеся РОВНО в 100 (метод наибольшего остатка).
+// values: объект key->число; total: знаменатель (обычно сумма values).
+// Отдаёт объект key->pct. Без этого независимое округление иногда даёт 99/101%.
+function percentages(values, total) {
+  const keys = Object.keys(values);
+  const out = {};
+  if (!total) { keys.forEach((k) => { out[k] = 0; }); return out; }
+  const parts = keys.map((k) => {
+    const exact = (values[k] / total) * 100;
+    const floor = Math.floor(exact);
+    return { k: k, floor: floor, rem: exact - floor };
+  });
+  const sumFloor = parts.reduce((s, p) => s + p.floor, 0);
+  const sumVals = parts.reduce((s, p) => s + values[p.k], 0);
+  const target = Math.round((sumVals / total) * 100); // для нашего случая = 100
+  const deficit = Math.max(0, target - sumFloor);
+  parts.sort((a, b) => b.rem - a.rem); // больший остаток округляем вверх первым
+  parts.forEach((p, i) => { out[p.k] = p.floor + (i < deficit ? 1 : 0); });
+  return out;
+}
+
+// Личный расклад: типы со score > 0, по убыванию. Проценты — методом наибольшего остатка.
 function personalBreakdown(scores) {
-  const total = QUESTIONS.length; // 12
+  const pcts = percentages(scores, QUESTIONS.length); // знаменатель = 12
   return Object.keys(scores)
     .filter((k) => scores[k] > 0)
-    .map((k) => ({ key: k, score: scores[k], pct: Math.round((scores[k] / total) * 100) }))
+    .map((k) => ({ key: k, score: scores[k], pct: pcts[k] }))
     .sort((a, b) => b.score - a.score);
 }
 
@@ -169,21 +190,15 @@ function renderResult() {
 
   // Личный расклад
   const breakdown = personalBreakdown(state.scores);
-  const maxPct = breakdown.length ? breakdown[0].pct : 100;
   const host = document.getElementById("r-breakdown");
   host.innerHTML = "";
   breakdown.forEach((row) => {
-    host.appendChild(barRow({
-      key: row.key,
-      pct: row.pct,
-      fillPct: maxPct ? Math.round((row.pct / maxPct) * 100) : 0,
-      isMe: row.key === state.result
-    }));
+    host.appendChild(barRow({ key: row.key, pct: row.pct, isMe: row.key === state.result }));
   });
 }
 
-// Одна строка-полоска. fillPct — относительная длина (для красоты), pct — подпись.
-function barRow({ key, pct, fillPct, isMe }) {
+// Одна строка-полоска. Длина полосы = реальному проценту (честно, без нормировки к максимуму).
+function barRow({ key, pct, isMe }) {
   const a = ARCHETYPES[key];
   const wrap = document.createElement("div");
   wrap.className = "bar" + (isMe ? " is-me" : "");
@@ -195,7 +210,7 @@ function barRow({ key, pct, fillPct, isMe }) {
     '<div class="bar__track"><div class="bar__fill"></div></div>';
   // анимируем ширину после вставки
   const fill = wrap.querySelector(".bar__fill");
-  requestAnimationFrame(() => { fill.style.width = (fillPct != null ? fillPct : pct) + "%"; });
+  requestAnimationFrame(() => { fill.style.width = pct + "%"; });
   return wrap;
 }
 
@@ -217,14 +232,18 @@ function renderStats(data, winner) {
   const total = (data && data.total) || 0;
   if (!total) return;
 
+  // Нормализуем counts по всем типам и считаем проценты методом наибольшего остатка.
+  const norm = {};
+  Object.keys(ARCHETYPES).forEach((k) => { norm[k] = counts[k] || 0; });
+  const pcts = percentages(norm, total);
+
   const rows = Object.keys(ARCHETYPES)
-    .map((k) => ({ key: k, count: counts[k] || 0, pct: Math.round(((counts[k] || 0) / total) * 100) }))
+    .map((k) => ({ key: k, count: norm[k], pct: pcts[k] || 0 }))
     .filter((r) => r.count > 0)
     .sort((a, b) => b.count - a.count);
   if (!rows.length) return;
 
-  const maxPct = rows[0].pct || 100;
-  const myPct = Math.round(((counts[winner] || 0) / total) * 100);
+  const myPct = pcts[winner] || 0; // согласовано с полоской твоего типа
 
   document.getElementById("r-stats-summary").innerHTML =
     "Всего прошли: <b>" + total + "</b>. Ты в числе <b>" + myPct + "%</b> таких же.";
@@ -232,12 +251,7 @@ function renderStats(data, winner) {
   const host = document.getElementById("r-stats-bars");
   host.innerHTML = "";
   rows.forEach((r) => {
-    host.appendChild(barRow({
-      key: r.key,
-      pct: r.pct,
-      fillPct: maxPct ? Math.round((r.pct / maxPct) * 100) : 0,
-      isMe: r.key === winner
-    }));
+    host.appendChild(barRow({ key: r.key, pct: r.pct, isMe: r.key === winner }));
   });
 
   document.getElementById("r-stats-block").hidden = false;
