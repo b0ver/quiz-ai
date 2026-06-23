@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Какой ты промптер?</title>
+
+<!-- Open Graph / превью при шеринге самой Pages-ссылки -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Какой ты промптер?">
+<meta property="og:description" content="Ты договариваешься с нейросетью или орешь на нее капсом? 6 вопросов, ~1 минута — узнай свой тип промптинга.">
+<meta property="og:image" content="https://b0ver.github.io/quiz-ai/prompter/assets/og.png">
+<meta property="og:url" content="https://b0ver.github.io/quiz-ai/prompter/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Какой ты промптер?">
+<meta name="twitter:description" content="6 вопросов, ~1 минута — узнай свой тип промптинга.">
+<meta name="twitter:image" content="https://b0ver.github.io/quiz-ai/prompter/assets/og.png">
+
+<link rel="icon" type="image/png" href="assets/favicon.png">
+
+<!-- единственная внешняя зависимость — Telegram WebApp SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<!-- общая база коллекции (шрифты + токены), затем вёрстка квиза -->
+<link rel="stylesheet" href="../shared/base.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- START -->
+  <section id="start" class="screen active">
+    <div class="term"><span class="o">~/edu</span> $ ./whoami --prompter<span class="cursor"></span></div>
+    <div class="res-emoji">⌨️</div>
+    <h1>Какой ты <span class="o">промптер?</span></h1>
+    <p class="lede">Ты договариваешься с нейросетью или орешь на нее капсом? Пишешь роман ради простого вопроса или «сделай красиво» и обижаешься? Сейчас выясним.</p>
+    <div class="start-foot">
+      <div class="meta"><span><b>6</b> вопросов</span><span><b>~1</b> мин</span><span>0 регистраций</span></div>
+      <button class="btn" id="startBtn">Узнать свой тип →</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section id="quiz" class="screen">
+    <div class="bars" id="bars"></div>
+    <div class="qcount" id="qcount"></div>
+    <div class="q" id="qtext"></div>
+    <div class="answers" id="answers"></div>
+  </section>
+
+  <!-- RESULT -->
+  <section id="result" class="screen">
+    <div class="res-emoji" id="resEmoji"></div>
+    <div class="whoami">$ whoami <span class="o">→</span> твой тип промптинга</div>
+    <div class="res-name" id="resName"></div>
+    <div class="res-card"><p class="res-desc" id="resDesc"></p></div>
+    <div class="res-sub" id="resSub"></div>
+    <div class="res-actions">
+      <!-- in-page шеринг: виден только вне Telegram (в TG шерит нативная MainButton) -->
+      <button class="btn hidden" id="shareBtn">Поделиться результатом</button>
+      <!-- ростовая петля: результат → подписка (вторичная, ghost) -->
+      <button class="btn ghost" id="channelBtn">Подписаться на Доброцикл</button>
+      <button class="btn ghost" id="restartBtn">Пройти заново</button>
+    </div>
+  </section>
+
+</div>
+<div class="toast" id="toast">Скопировано ✓</div>
+
+<!-- порядок важен: конфиг → общий TG-слой → движок -->
+<script src="config.js"></script>
+<script src="../shared/tma.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

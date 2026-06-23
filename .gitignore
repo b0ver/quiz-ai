@@ -6,3 +6,6 @@ worker/node_modules/
 # os / editor
 .DS_Store
 *.log
+
+# local dev scratch (пустая папка, в которой был запущен Claude Code)
+PromtWHo/

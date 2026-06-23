@@ -1,0 +1,65 @@
+/* ============================================================
+   shared/base.css — общая база для всех квизов коллекции
+   Самохостинг шрифтов + бренд-токены + минимальный reset.
+   Подключается ПЕРВЫМ, до индивидуального styles.css квиза.
+   Пути к шрифтам — относительно этого файла (shared/fonts/).
+   ============================================================ */
+
+/* ---------- JetBrains Mono (латиница + кириллица) ---------- */
+@font-face{
+  font-family:"JetBrains Mono";
+  font-style:normal;font-weight:500;font-display:swap;
+  src:url("fonts/jetbrains-mono-500.woff2") format("woff2");
+}
+@font-face{
+  font-family:"JetBrains Mono";
+  font-style:normal;font-weight:700;font-display:swap;
+  src:url("fonts/jetbrains-mono-700.woff2") format("woff2");
+}
+@font-face{
+  font-family:"JetBrains Mono";
+  font-style:normal;font-weight:800;font-display:swap;
+  src:url("fonts/jetbrains-mono-800.woff2") format("woff2");
+}
+
+/* ---------- Inter (латиница + кириллица) ---------- */
+@font-face{
+  font-family:"Inter";
+  font-style:normal;font-weight:400;font-display:swap;
+  src:url("fonts/inter-400.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;font-weight:500;font-display:swap;
+  src:url("fonts/inter-500.woff2") format("woff2");
+}
+@font-face{
+  font-family:"Inter";
+  font-style:normal;font-weight:700;font-display:swap;
+  src:url("fonts/inter-700.woff2") format("woff2");
+}
+
+/* ---------- Бренд-токены коллекции (тёмная консольная айдентика) ----------
+   Конкретный квиз может переопределить любую переменную в своём :root. */
+:root{
+  --bg:#0b1020;
+  --surface:rgba(255,255,255,.04);
+  --surface-line:rgba(255,255,255,.11);
+  --orange:#ff7a45;
+  --amber:#ffb13d;
+  --blue:#5b8cff;
+  --text:#eef2ff;
+  --muted:#94a1c4;
+  /* фолбэк-стеки — квиз остаётся читаемым даже если woff2 не загрузился */
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --body:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+
+/* ---------- Минимальный reset ---------- */
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+
+/* Глобально уважаем системную настройку «меньше движения» */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important;transition:none !important}
+}

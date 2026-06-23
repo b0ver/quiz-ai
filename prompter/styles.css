@@ -1,0 +1,95 @@
+/* ============================================================
+   prompter/styles.css — вёрстка квиза «Какой ты промптер?»
+   Бренд-токены, reset и @font-face — в ../shared/base.css
+   (подключается раньше этого файла).
+   ============================================================ */
+
+body{
+  font-family:var(--body);color:var(--text);background:var(--bg);
+  background-image:
+    radial-gradient(120% 80% at 0% -10%, rgba(255,122,69,.22), transparent 55%),
+    radial-gradient(120% 80% at 100% 110%, rgba(91,140,255,.22), transparent 55%);
+  background-attachment:fixed;min-height:100dvh;
+  display:flex;justify-content:center;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+#app{
+  width:100%;max-width:460px;min-height:100dvh;
+  /* safe-area: учитываем «чёлку» и нижнюю панель */
+  padding:
+    calc(26px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right))
+    calc(26px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left));
+  display:flex;flex-direction:column;
+}
+.screen{display:none;flex:1;flex-direction:column;animation:rise .42s cubic-bezier(.2,.7,.2,1)}
+.screen.active{display:flex}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.cursor{display:inline-block;width:.6ch;height:1.05em;vertical-align:-.12em;
+  background:var(--orange);margin-left:2px;animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- START ---------- */
+.term{font-family:var(--mono);font-size:13px;color:var(--muted);
+  letter-spacing:.02em;margin-bottom:24px}
+.term .o{color:var(--orange)}
+h1{font-family:var(--mono);font-weight:800;font-size:34px;line-height:1.08;
+  letter-spacing:-.02em;margin-bottom:16px}
+h1 .o{color:var(--orange)}
+.lede{color:var(--muted);font-size:16px;line-height:1.5;max-width:38ch}
+.start-foot{margin-top:auto;padding-top:28px}
+.meta{display:flex;gap:18px;color:var(--muted);font-size:13px;margin-bottom:16px;font-family:var(--mono)}
+.meta b{color:var(--text);font-weight:700}
+
+.btn{width:100%;border:none;cursor:pointer;font-family:var(--body);font-weight:700;font-size:17px;
+  color:#1a1205;padding:17px;border-radius:14px;
+  background:linear-gradient(120deg,var(--orange),var(--amber));
+  box-shadow:0 10px 30px rgba(255,122,69,.30);
+  transition:transform .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(2px) scale(.99);box-shadow:0 6px 18px rgba(255,122,69,.24)}
+.btn.ghost{background:transparent;color:var(--muted);box-shadow:none;
+  border:1px solid var(--surface-line);font-weight:500}
+
+/* ---------- QUIZ ---------- */
+.bars{display:flex;gap:6px;margin-bottom:26px}
+.bar{flex:1;height:6px;border-radius:3px;background:var(--surface-line)}
+.bar.done{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.qcount{font-family:var(--mono);font-weight:700;font-size:12px;letter-spacing:.12em;
+  color:var(--muted);margin-bottom:14px}
+.q{font-family:var(--mono);font-weight:700;font-size:21px;line-height:1.3;margin-bottom:24px}
+.q .o{color:var(--orange)}
+.answers{display:flex;flex-direction:column;gap:11px}
+.answer{display:flex;gap:12px;align-items:flex-start;text-align:left;cursor:pointer;width:100%;
+  font-family:var(--body);font-size:15.5px;line-height:1.4;color:var(--text);
+  background:var(--surface);border:1px solid var(--surface-line);padding:15px 16px;border-radius:13px;
+  transition:transform .12s ease, border-color .15s ease, background .15s ease}
+.answer .mk{font-family:var(--mono);color:var(--orange);font-weight:700;flex:none;line-height:1.4}
+.answer:hover{border-color:rgba(255,122,69,.5)}
+.answer:active{transform:scale(.985)}
+.answer.picked{border-color:transparent;color:#1a1205;
+  background:linear-gradient(120deg,var(--orange),var(--amber));box-shadow:0 10px 26px rgba(255,122,69,.35)}
+.answer.picked .mk{color:#1a1205}
+
+/* ---------- RESULT ---------- */
+.res-emoji{font-size:68px;line-height:1;margin-bottom:8px}
+.whoami{font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:10px}
+.whoami .o{color:var(--orange)}
+.res-name{font-family:var(--mono);font-weight:800;font-size:30px;line-height:1.1;margin-bottom:18px}
+.res-card{background:var(--surface);border:1px solid var(--surface-line);border-radius:16px;
+  padding:20px;margin-bottom:14px}
+.res-desc{color:var(--text);font-size:16px;line-height:1.55}
+.res-sub{font-family:var(--mono);font-size:14px;color:var(--blue);margin-bottom:20px}
+.res-actions{margin-top:auto;padding-top:8px;display:flex;flex-direction:column;gap:10px}
+
+.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));
+  transform:translateX(-50%) translateY(20px);
+  background:#fff;color:#0b1020;font-weight:700;font-size:14px;padding:11px 18px;border-radius:99px;
+  opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;z-index:9;
+  box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- A11y: видимый фокус с клавиатуры ---------- */
+.btn:focus-visible,
+.answer:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+
+/* ---------- Утилита: скрыть элемент ---------- */
+.hidden{display:none !important}
