@@ -66,18 +66,18 @@ Pages раздаёт весь репозиторий `quiz-ai` (ветка `main
 2. Выбрать бота **@aidaquiz_bot**.
 3. Заполнить:
    - **Title** — «Какой ты промптер?»
-   - **Short name** — `prompter` (это хвост ссылки)
+   - **Short name** — `whichaiprompter` (это хвост ссылки)
    - **Description** — короткое описание
    - **Photo / GIF** — `assets/app-640x360.png` (ровно под требование BotFather 640×360)
    - **Web App URL** — `https://b0ver.github.io/quiz-ai/prompter/`
-4. BotFather выдаст direct-link: **`https://t.me/aidaquiz_bot/prompter`**
+4. BotFather выдаст direct-link: **`https://t.me/aidaquiz_bot/whichaiprompter`**
 
 ### 3. Прописать direct-link в конфиг
 
 В `prompter/config.js` заменить:
 
 ```js
-APP_DIRECT_LINK: "https://t.me/aidaquiz_bot/prompter",
+APP_DIRECT_LINK: "https://t.me/aidaquiz_bot/whichaiprompter",
 ```
 
 (сейчас там временно стоит ссылка на канал, чтобы шеринг работал и до настройки бота).
@@ -85,15 +85,15 @@ APP_DIRECT_LINK: "https://t.me/aidaquiz_bot/prompter",
 
 ### 4. Пост в канал @d0brocycle
 
-- **Быстро** — вставить `https://t.me/aidaquiz_bot/prompter` текстом в пост: тап по ссылке
+- **Быстро** — вставить `https://t.me/aidaquiz_bot/whichaiprompter` текстом в пост: тап по ссылке
   открывает мини-апп.
 - **Аккуратно** — запостить через бота-админа канала сообщение с inline-кнопкой типа **URL**,
   ведущей на тот же direct-link. (Кнопки `web_app` в каналах недоступны — используем
-  обычную URL-кнопку на `t.me/aidaquiz_bot/prompter`.)
+  обычную URL-кнопку на `t.me/aidaquiz_bot/whichaiprompter`.)
 
 ### 5. Тест на телефоне
 
-Открыть `t.me/aidaquiz_bot/prompter` → пройти квиз → проверить:
+Открыть `t.me/aidaquiz_bot/whichaiprompter` → пройти квиз → проверить:
 шапка/фон совпадают (без шва), вертикальный свайп не закрывает приложение, хаптика на тапах
 и на результате, кнопка «Назад» откатывает вопросы, нативная «Поделиться результатом»
 открывает выбор чата, кнопка «Подписаться на Доброцикл» ведёт на канал.
@@ -111,6 +111,6 @@ APP_DIRECT_LINK: "https://t.me/aidaquiz_bot/prompter",
   `savePreparedInlineMessage`. Здесь намеренно не используем, чтобы остаться на статике.
 - **Story-шеринг** — `tg.shareToStory(media_url)`.
 - **Аналитика источников** — параметр `startapp` в direct-link
-  (`t.me/aidaquiz_bot/prompter?startapp=channel`), читается из `tg.initDataUnsafe.start_param`.
+  (`t.me/aidaquiz_bot/whichaiprompter?startapp=channel`), читается из `tg.initDataUnsafe.start_param`.
 - **Статистика прохождений** — переиспользовать Cloudflare Worker из `../worker` (как в
   квизе «Какой ты ИИ?»).

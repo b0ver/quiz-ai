@@ -11,10 +11,8 @@ window.QUIZ_CONFIG = {
   CHANNEL_HANDLE: "@d0brocycle",
   CHANNEL_NAME:   "Доброцикл",
 
-  // TODO: после /newapp в BotFather подставь сюда direct-link мини-аппа,
-  //       например: "https://t.me/aidaquiz_bot/prompter"
-  // Пока стоит ссылка на канал, чтобы шеринг работал и до настройки бота:
-  APP_DIRECT_LINK: "https://t.me/d0brocycle",
+  // Direct-link мини-аппа (BotFather /newapp). Сюда ведёт шеринг результата.
+  APP_DIRECT_LINK: "https://t.me/aidaquiz_bot/whichaiprompter",
 
   /* Цвет бренда для нативной шапки/фона Telegram (совпадает с --bg) */
   BRAND_COLOR: "#0b1020",
