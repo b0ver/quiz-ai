@@ -68,7 +68,7 @@ Pages раздаёт весь репозиторий `quiz-ai` (ветка `main
    - **Title** — «Какой ты промптер?»
    - **Short name** — `prompter` (это хвост ссылки)
    - **Description** — короткое описание
-   - **Photo / GIF** — можно `assets/og.png`
+   - **Photo / GIF** — `assets/app-640x360.png` (ровно под требование BotFather 640×360)
    - **Web App URL** — `https://b0ver.github.io/quiz-ai/prompter/`
 4. BotFather выдаст direct-link: **`https://t.me/aidaquiz_bot/prompter`**
 
